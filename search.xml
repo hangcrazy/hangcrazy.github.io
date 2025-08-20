@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>西瓜书+南瓜书——（三）线性模型</title>
+      <link href="/2025/08/20/%E8%A5%BF%E7%93%9C%E4%B9%A6+%E5%8D%97%E7%93%9C%E4%B9%A6%E5%AD%A6%E4%B9%A0/%E4%B8%89_%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/"/>
+      <url>/2025/08/20/%E8%A5%BF%E7%93%9C%E4%B9%A6+%E5%8D%97%E7%93%9C%E4%B9%A6%E5%AD%A6%E4%B9%A0/%E4%B8%89_%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="西瓜书-南瓜书——（三）线性模型"><a href="#西瓜书-南瓜书——（三）线性模型" class="headerlink" title="西瓜书+南瓜书——（三）线性模型"></a>西瓜书+南瓜书——（三）线性模型</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本次笔记为<code>DataWhale周志华机器学习入门</code>课程相关记录</p><p>引用资料：[1]. <a href="https://www.datawhale.cn/learn/summary/2">https://www.datawhale.cn/learn/summary/2</a><br>                   [2]. 周志华. 机器学习[M]. 北京: 清华大学出版社, 2016.</p><h2 id="3-1-基本形式"><a href="#3-1-基本形式" class="headerlink" title="3.1 基本形式"></a>3.1 基本形式</h2><ul><li>给定由$d$个属性描述的示例$\pmb{x}&#x3D;(x_1;x_2;…;x_d)$，其中$x_i$是$\pmb{x}$在第$i$个属性上的取值，线性模型通过属性的线性组合来进行预测</li></ul><p>$$<br>f(\pmb{x})&#x3D;w_1x_1+w_2x_2+…+w_dx_d+b\<br>向量形式：f(\pmb{x})&#x3D;\pmb{w^T}\pmb{x}+b<br>$$</p><p>其中$\pmb{w}&#x3D;(w_1;w_2;…;w_d)$。$\pmb{w}$和$b$学得之后，模型就确定了</p><ul><li>线性模型<strong>形式简单、易于建模</strong></li></ul><h2 id="3-2-线性回归"><a href="#3-2-线性回归" class="headerlink" title="3.2 线性回归"></a>3.2 线性回归</h2><ul><li>给定数据集$D&#x3D;{(\pmb{x_1},y_1),(\pmb{x_2},y_2),…,(\pmb{x_m},y_m)}$，其中$\pmb{x_i}&#x3D;(x_{i1};x_{i2};…;x_{id};),y_i\in \mathbb{R}$</li><li>对离散属性，若属性值间存在“序“关系，可通过连续化将其转化为连续值</li><li>最简单情形为例，输入属性的数目只有一个。线性回归试图学得</li></ul><p>$$<br>f(x_i)&#x3D;wx_i+b,使得f(x_i) \simeq y_i<br>$$</p><p>均方误差是回归任务中最常用的性能度量，有着良好的几何意义，对应了常用的欧几里得距离。基于均方误差最小化来进行模型求解的方法称为“最小二乘法”。在线性回归中，最小二乘法就是试图找到一条直线，是所有样本到直线上的欧式距离之和最小。</p><p>可得$w$和$b$最优解的闭式解<br>$$<br>w &#x3D; \frac{\sum_{i&#x3D;1}^{m} y_i \left(x_i - \bar{x}\right)}<br>         {\sum_{i&#x3D;1}^{m} x_i^2 - \frac{1}{m}\left(\sum_{i&#x3D;1}^{m} x_i\right)^2} \<br>b &#x3D; \frac{1}{m} \sum_{i&#x3D;1}^{m} \left( y_i - w x_i \right)<br>$$<br>其中$\bar{x} &#x3D; \frac{1}{m}\sum_{i &#x3D; 1}^{m}x_{i}$为$x$的均值</p><ul><li>数据集$D$中的样本由$d$个属性描述，此时为”多元线性回归“</li></ul><p>线性回归模型为$f(\hat{x}_i) &#x3D; \hat{x}_i^{\text{T}} (\mathbf{X}^{\text{T}} \mathbf{X})^{-1} \mathbf{X}^{\text{T}} \mathbf{y}$。现实任务中$\mathbf{X}^\text{T}\mathbf{X}$往往不是满秩矩阵，选择哪一个解作为输出，由学习算法的归纳偏好决定，常见做法是引入正则化项</p><ul><li>模型预测值逼近$y$的衍生物</li></ul><p>$$<br>\ln y &#x3D; \boldsymbol{w}^{\text{T}} \boldsymbol{x} + b<br>$$</p><p>所谓的“对数线性回归”。它实际上是在试图让 $e^{\boldsymbol{w}^{\text{T}}\boldsymbol{x} + b}$ 逼近 $y$。形式上仍是线性回归, 但实质上已是在求取输入空间到输出空间的非线性函数映射</p><ul><li><strong>广义线性模型：</strong>$y &#x3D; g^{-1}(\boldsymbol{w}^{\text{T}}\boldsymbol{x} + b)$，其中函数$g(\cdot)$称为“联系函数”，单调可微。对数线性回归是广义线性模型在 $g(\cdot) &#x3D; \ln(\cdot)$时的特例</li></ul><h2 id="3-3-对数几率回归"><a href="#3-3-对数几率回归" class="headerlink" title="3.3 对数几率回归"></a>3.3 对数几率回归</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 人工智能 </category>
+          
+          <category> 机器学习 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 西瓜书 </tag>
+            
+            <tag> 南瓜书 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>西瓜书+南瓜书——（二）模型评估与选择</title>
       <link href="/2025/08/19/%E8%A5%BF%E7%93%9C%E4%B9%A6+%E5%8D%97%E7%93%9C%E4%B9%A6%E5%AD%A6%E4%B9%A0/%E4%BA%8C_%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/"/>
       <url>/2025/08/19/%E8%A5%BF%E7%93%9C%E4%B9%A6+%E5%8D%97%E7%93%9C%E4%B9%A6%E5%AD%A6%E4%B9%A0/%E4%BA%8C_%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9/</url>
@@ -573,28 +604,6 @@
     
     
     <entry>
-      <title>movies</title>
-      <link href="/movies/index.html"/>
-      <url>/movies/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>about</title>
-      <link href="/about/index.html"/>
-      <url>/about/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>links</title>
       <link href="/links/index.html"/>
       <url>/links/index.html</url>
@@ -617,9 +626,20 @@
     
     
     <entry>
-      <title>tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>about</title>
+      <link href="/about/index.html"/>
+      <url>/about/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>movies</title>
+      <link href="/movies/index.html"/>
+      <url>/movies/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
@@ -631,6 +651,17 @@
       <title>music</title>
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script>]]></content>
       
